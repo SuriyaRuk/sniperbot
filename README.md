@@ -65,3 +65,4 @@ RPC_NODE=https://bsc-dataseed1.defibit.io/
 - your GWEI are to small (use 15+ for early token)
 - your slippage are to small (use 30+ for early token)
 
+![advanced](https://user-images.githubusercontent.com/105888892/169407294-509687df-632d-452d-a3c1-339fe2b065b7.png)
